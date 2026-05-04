@@ -1,0 +1,214 @@
+
+.glossy-btn {
+    /* मोबाइलमा थिच्दा आउने निलो बक्स हटाउन */
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+    outline: none;
+    
+    /* बाँकी पुरानो कोड यहाँ हुन्छ... */
+}
+
+/* सोसल आइकनहरूको बक्सबाट पनि हटाउन यो थप्नुहोस् */
+.social-box {
+    -webkit-tap-highlight-color: transparent;
+    outline: none;
+}
+
+
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body, html {
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    font-family: 'Poppins', sans-serif;
+    background-color: #000;
+}
+
+/* --- INITIAL SCREEN --- */
+#initial-screen {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: opacity 0.5s ease;
+}
+
+.glossy-btn {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background: linear-gradient(145deg, #ffffff, #e6e6e6);
+    box-shadow: 0 10px 40px rgba(255, 255, 255, 0.2), 
+                inset 0 -5px 10px rgba(0, 0, 0, 0.1);
+    border: none;
+    cursor: pointer;
+    font-size: 3rem;
+    color: #333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: transform 0.8s cubic-bezier(0.7, -0.5, 0.3, 1.5);
+}
+
+.glossy-btn.active {
+    transform: rotate(720deg) scale(0);
+}
+
+/* --- VORTEX TRANSITION --- */
+#vortex-overlay {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: radial-gradient(circle, #fff 0%, #000 70%);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 100;
+    pointer-events: none;
+    opacity: 0;
+}
+
+#vortex-overlay.animate {
+    animation: kamui-vortex 1.5s ease-in-out forwards;
+}
+
+@keyframes fall {
+    0% {
+        top: -50px; /* स्क्रिन भन्दा अलि माथिबाट सुरु हुने */
+        transform: translateX(0) rotate(0deg);
+    }
+    100% {
+        top: 110vh; /* स्क्रिन भन्दा अलि तलसम्म पुग्ने */
+        transform: translateX(100px) rotate(540deg); /* झर्दा अलि दायाँ बायाँ हल्लिने */
+    }
+}
+
+
+/* --- PREMIUM SCREEN --- */
+#premium-screen {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: linear-gradient(to bottom, #050510, #101025);
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+}
+
+/* Rain Effect */
+.rain {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: url('https://raw.githubusercontent.com/PiyushSuthar/Project-Images/main/rain.png');
+    opacity: 0.15;
+    animation: rainMove 0.4s linear infinite;
+    pointer-events: none;
+}
+
+@keyframes rainMove {
+    from { background-position: 0 0; }
+    to { background-position: 10% 100%; }
+}
+
+/* Support Card */
+.support-card {
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(25px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    
+    /* बक्सको साइज सानो बनाउन padding र width मिलाउने */
+    padding: 15px;           /* ५०-६० बाट घटाएर ३० बनाउँदा बक्स टाइट देखिन्छ */
+    width: 90%;              /* मोबाइलमा अलि खाली ठाउँ छोड्न */
+    max-width: 250px;        /* बक्सको अधिकतम चौडाई ३५० सम्म मात्र हुने */
+    
+    border-radius: 30px;     /* कुनाको घुमावट अलि कम गर्न */
+    text-align: center;
+    box-shadow: 0 40px 100px rgba(0, 0, 0, 0.8);
+    
+    /* एनिमेसन र पोजिसन */
+    transform: translateY(100px);
+    opacity: 0;
+    transition: 1.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+    z-index: 20;
+}
+
+
+.support-card.visible {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+h2 {
+    color: #fff;
+    font-weight: 200;
+    letter-spacing: 4px;      /* Letter spacing अलि घटाउँदा एकै लाइनमा अट्छ */
+    margin-bottom: 30px;
+    font-size: 1.2rem;        /* साइज अलि सानो बनाउनुहोस् (पहिले १.५ थियो) */
+    white-space: nowrap;      /* यसले टेक्स्टलाई अर्को लाइनमा जान दिँदैन */
+    width: 100%;              /* बक्सको पुरै भाग ओगटोस् भनेर */
+    text-transform: uppercase;
+}
+
+
+/* Social Boxes */
+.social-grid {
+    display: flex;
+    gap: 30px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.social-box {
+    width: 60px;  /* यहाँ 110px बाट घटाएर 60px वा आफ्नो इच्छा अनुसार राख्नुहोस् */
+    height: 60px; /* चौडाई र उचाई बराबर राख्नुहोला */
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px; /* बक्स सानो भएपछि रेडियस पनि अलि घटाउनु राम्रो हुन्छ */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5rem; /* आइकनको साइज पनि अलि सानो बनाउन 1.5rem वा 1.8rem राख्नुहोस् */
+    color: #fff;
+    text-decoration: none;
+    filter: grayscale(1);
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+
+.social-box:hover {
+    filter: grayscale(0);
+    transform: scale(1.25) translateY(-10px);
+    background: rgba(255, 255, 255, 0.15);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+}
+
+/* Individual Colors */
+.tiktok:hover { color: #00f2ea; }
+.whatsapp:hover { color: #25d366; }
+.youtube:hover { color: #ff0000; }
+.telegram:hover { color: #0088cc; }
+
+/* Blossom Petals (Simulated via JS) */
+.petal {
+    position: absolute;
+    background-color: #ffb7c5;
+    border-radius: 150% 0 150% 0;
+    opacity: 0.7;
+    pointer-events: none;
+    animation: fall linear forwards;
+}
+
+@keyframes fall {
+    to {
+        transform: translateY(100vh) rotate(540deg);
+    }
+}
